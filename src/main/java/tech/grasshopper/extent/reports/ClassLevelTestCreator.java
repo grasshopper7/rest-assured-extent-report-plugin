@@ -15,7 +15,7 @@ import com.aventstack.extentreports.model.Test;
 import tech.grasshopper.extent.pojo.ResultExtent;
 
 @Singleton
-public class ExtentClassLevelCreator {
+public class ClassLevelTestCreator {
 
 	public ExtentTest generate(ExtentReports extent, String testName, List<ResultExtent> results) {
 		ExtentTest clzExtentTest = extent.createTest(testName);

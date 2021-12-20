@@ -34,6 +34,7 @@ public class ResultsProcessor {
 
 	private ResultExtent transformResult(Result result) {
 		return ResultExtent.builder().name(result.getName()).status(statusProcessor.process(result.getStatus()))
+				.statusMessage(result.getStatusDetails().getMessage()).stackTrace(result.getStatusDetails().getTrace())
 				.startTime(dateProcessor.process(result.getStart())).endTime(dateProcessor.process(result.getStop()))
 				.className(labelProcessor.processClassName(result.getLabels()))
 				.categories(labelProcessor.processCategories(result.getLabels()))

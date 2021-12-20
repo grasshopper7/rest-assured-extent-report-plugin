@@ -26,6 +26,10 @@ public class ResultExtent {
 
 	private Status status;
 
+	private String statusMessage;
+
+	private String stackTrace;
+
 	private Date startTime;
 
 	private Date endTime;

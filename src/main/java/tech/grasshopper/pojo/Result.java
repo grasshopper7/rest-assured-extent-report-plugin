@@ -14,7 +14,7 @@ public class Result {
 
 	private String status;
 
-	private StatusDetails statusDetails;
+	private StatusDetails statusDetails = new StatusDetails();
 
 	private List<Attachment> attachments = new ArrayList<>();
 

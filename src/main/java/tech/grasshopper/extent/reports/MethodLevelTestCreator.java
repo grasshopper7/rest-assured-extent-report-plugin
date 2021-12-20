@@ -8,7 +8,7 @@ import com.aventstack.extentreports.model.Test;
 import tech.grasshopper.extent.pojo.ResultExtent;
 
 @Singleton
-public class ExtentMethodLevelCreator {
+public class MethodLevelTestCreator {
 
 	public ExtentTest generate(ExtentTest clzExtentTest, ResultExtent result) {
 		ExtentTest methodExtentTest = clzExtentTest.createNode(result.getName());
