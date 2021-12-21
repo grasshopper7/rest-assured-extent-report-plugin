@@ -1,6 +1,8 @@
 package tech.grasshopper;
 
-import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -10,14 +12,14 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
+import tech.grasshopper.exception.RestAssuredExtentReportPluginException;
 import tech.grasshopper.extent.pojo.ResultExtent;
 import tech.grasshopper.extent.reports.ReportCreator;
 import tech.grasshopper.logging.ReportLogger;
 import tech.grasshopper.pojo.Result;
 import tech.grasshopper.processor.ResultsProcessor;
 import tech.grasshopper.properties.ReportProperties;
-import tech.grasshopper.results.ResultsJsonDeserializer;
-import tech.grasshopper.results.ResultsJsonPathCollector;
+import tech.grasshopper.results.JsonResultsCollector;
 
 @Mojo(name = "extentreport")
 public class RestAssuredExtentReportPlugin extends AbstractMojo {
@@ -37,8 +39,7 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.hidelogEvents", defaultValue = "true")
 	private boolean hidelogEvents;
 
-	private ResultsJsonPathCollector resultsJsonPathCollector;
-	private ResultsJsonDeserializer resultsJsonDeserializer;
+	private JsonResultsCollector jsonResultsCollector;
 	private ResultsProcessor resultsProcessor;
 	private ReportCreator reportCreator;
 	private ReportProperties reportProperties;
@@ -46,11 +47,10 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	private ReportLogger logger;
 
 	@Inject
-	public RestAssuredExtentReportPlugin(ResultsJsonPathCollector resultsJsonPathCollector,
-			ResultsJsonDeserializer resultsJsonDeserializer, ResultsProcessor resultsProcessor,
+	public RestAssuredExtentReportPlugin(JsonResultsCollector jsonResultsCollector, ResultsProcessor resultsProcessor,
 			ReportCreator reportCreator, ReportProperties reportProperties, ReportLogger logger) {
-		this.resultsJsonPathCollector = resultsJsonPathCollector;
-		this.resultsJsonDeserializer = resultsJsonDeserializer;
+
+		this.jsonResultsCollector = jsonResultsCollector;
 		this.resultsProcessor = resultsProcessor;
 		this.reportCreator = reportCreator;
 		this.reportProperties = reportProperties;
@@ -60,21 +60,20 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	public void execute() {
 		try {
 			logger.initializeLogger(getLog());
-			logger.info("STARTED EXTENT REPORT GENERATION PLUGIN");
+			logger.info("STARTING EXTENT REPORT GENERATION");
 
 			setReportProperties();
+			createAttachmentFolder();
 
-			List<Path> resultPaths = resultsJsonPathCollector
-					.retrievePaths(reportProperties.getAllureResultsDirectory());
-			List<Result> results = resultsJsonDeserializer.retrieveResults(resultPaths);
+			List<Result> results = jsonResultsCollector.retrieveResults(reportProperties.getAllureResultsDirectory());
 
-			// Need data validation
+			// Need data validation ??
 
 			Map<String, List<ResultExtent>> extentReportData = resultsProcessor.process(results);
 
 			reportCreator.generate(extentReportData);
 
-			logger.info("FINISHED EXTENT REPORT GENERATION PLUGIN");
+			logger.info("EXTENT REPORT SUCCESSFULLY GENERATED");
 		} catch (Throwable t) {
 			// Report will not result in build failure.
 			t.printStackTrace();
@@ -88,5 +87,14 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 		reportProperties.setExtentConfigFilePath(extentConfigFilePath);
 		reportProperties.setClearExtentReportData(clearExtentReportData);
 		reportProperties.setHidelogEvents(hidelogEvents);
+	}
+
+	private void createAttachmentFolder() {
+		try {
+			Files.createDirectories(Paths.get(reportProperties.getExtentReportDirectory(),
+					ReportProperties.EXTENT_REPORT_DATA_DIRECTORY));
+		} catch (IOException e) {
+			throw new RestAssuredExtentReportPluginException("Unable to create report attachments directory.", e);
+		}
 	}
 }

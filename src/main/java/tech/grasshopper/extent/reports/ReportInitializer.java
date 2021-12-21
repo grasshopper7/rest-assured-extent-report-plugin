@@ -39,7 +39,8 @@ public class ReportInitializer {
 	}
 
 	private ExtentSparkReporter initializeSparkReport(ExtentReports extent) {
-		ExtentSparkReporter spark = new ExtentSparkReporter("reports/SparkReport.html");
+		ExtentSparkReporter spark = new ExtentSparkReporter(
+				reportProperties.getExtentReportDirectory() + "/SparkReport.html");
 
 		extent.attachReporter(spark);
 		try {
@@ -47,7 +48,6 @@ public class ReportInitializer {
 		} catch (IOException e) {
 			logger.info("Unable to locate spark configuration file. Creating report with default settings.");
 		}
-
 		return spark;
 	}
 
@@ -61,6 +61,5 @@ public class ReportInitializer {
 		// Fix width of first column of details table
 		spark.config().setCss(
 				"div[class='card-body'] table[class='table table-sm'] tr[class='event-row'] table[class='markup-table table '] tr:first-child > td:first-child { width: 100px; }");
-
 	}
 }

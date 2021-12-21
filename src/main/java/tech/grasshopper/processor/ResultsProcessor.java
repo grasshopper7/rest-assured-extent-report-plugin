@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import tech.grasshopper.extent.pojo.ResultExtent;
 import tech.grasshopper.pojo.Result;
+import tech.grasshopper.processor.attachment.AttachmentProcessor;
 
 @Singleton
 public class ResultsProcessor {

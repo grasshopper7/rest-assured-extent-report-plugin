@@ -3,9 +3,11 @@ package tech.grasshopper.results;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,16 +22,17 @@ import tech.grasshopper.logging.ReportLogger;
 import tech.grasshopper.pojo.Result;
 
 @Singleton
-public class ResultsJsonDeserializer {
+public class JsonResultsCollector {
 
 	private ReportLogger logger;
 
 	@Inject
-	public ResultsJsonDeserializer(ReportLogger logger) {
+	public JsonResultsCollector(ReportLogger logger) {
 		this.logger = logger;
 	}
 
-	public List<Result> retrieveResults(List<Path> resultFilePaths) {
+	public List<Result> retrieveResults(String resultsDirectory) {
+		List<Path> resultFilePaths = retrievePaths(resultsDirectory);
 		Gson gson = new GsonBuilder().create();
 
 		List<Result> results = new ArrayList<>();
@@ -58,5 +61,22 @@ public class ResultsJsonDeserializer {
 					+ "Check the 'extentreport.allureResultsDirectory' plugin configuration.");
 
 		return results;
+	}
+
+	private List<Path> retrievePaths(String resultsDirectory) {
+		List<Path> resultFilePaths = null;
+		try {
+			resultFilePaths = Files.walk(Paths.get(resultsDirectory)).filter(Files::isRegularFile)
+					.filter(p -> p.toString().toLowerCase().endsWith("-result.json")).collect(Collectors.toList());
+		} catch (IOException e) {
+			throw new RestAssuredExtentReportPluginException(
+					"Unable to navigate Json result folder. Stopping report creation. "
+							+ "Check the 'extentreport.allureResultsDirectory' plugin configuration.");
+		}
+
+		if (resultFilePaths == null || resultFilePaths.size() == 0)
+			throw new RestAssuredExtentReportPluginException("No Allure Json Result found. Stopping report creation. "
+					+ "Check the 'extentreport.allureResultsDirectory' plugin configuration.");
+		return resultFilePaths;
 	}
 }

@@ -25,5 +25,4 @@ public class Result {
 	private String fullName;
 
 	private List<Label> labels = new ArrayList<>();
-
 }

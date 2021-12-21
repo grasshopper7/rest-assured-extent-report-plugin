@@ -13,7 +13,7 @@ public class StatusLogCreator {
 		if (result.getStatus() == Status.FAIL) {
 
 			String failTrace = result.getStackTrace().equals("") ? "No fail message." : result.getStackTrace();
-			methodExtentTest.skip(MarkupHelper.createCodeBlock(failTrace));
+			methodExtentTest.fail(MarkupHelper.createCodeBlock(failTrace));
 		} else if (result.getStatus() == Status.SKIP) {
 
 			String skipMsg = result.getStatusMessage().equals("") ? "No skip message." : result.getStatusMessage();
