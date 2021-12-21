@@ -3,6 +3,7 @@ package tech.grasshopper.extent.pojo;
 import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
+import tech.grasshopper.processor.attachment.AttachmentProcessor;
 import tech.grasshopper.properties.ReportProperties;
 
 @Getter
@@ -31,8 +32,10 @@ public abstract class HttpData {
 	}
 
 	private String contentFileName(String fileNamePrefix, String type) {
+		// Figure out why fileseparator and paths.get does not work
 		StringBuffer sbr = new StringBuffer(ReportProperties.EXTENT_REPORT_DATA_DIRECTORY);
-		return sbr.append("/").append(fileNamePrefix).append("-").append(type).append(".html").toString();
+		return sbr.append("/").append(fileNamePrefix).append(AttachmentProcessor.FILENAME_SEPARATOR).append(type)
+				.append(".html").toString();
 	}
 
 	public static HttpData createHttpData(String title) {

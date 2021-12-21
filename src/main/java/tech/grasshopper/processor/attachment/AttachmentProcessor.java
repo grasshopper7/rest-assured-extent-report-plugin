@@ -26,6 +26,8 @@ public class AttachmentProcessor {
 	private HttpLogData log;
 	List<HttpLogData> httpLogData;
 	private String fileNamePrefix = "";
+	
+	public static final String FILENAME_SEPARATOR = "-";
 
 	private AttachmentContentProcessor attachmentContentProcessor;
 
@@ -67,7 +69,7 @@ public class AttachmentProcessor {
 
 			httpData = HttpData.createHttpData(methodUrlOrStatusTxt);
 
-			if (attachment.getSource().indexOf('-') == -1) {
+			if (attachment.getSource().indexOf(FILENAME_SEPARATOR) == -1) {
 				logger.info("Skipping attachment as file name not correct - " + path.toString());
 				continue;
 			}
@@ -80,6 +82,7 @@ public class AttachmentProcessor {
 	}
 
 	private void processContent(Path path) {
+		//Refactor this code
 		try {
 			processBodyContent();
 		} catch (RestAssuredExtentReportPluginException e) {

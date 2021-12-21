@@ -2,6 +2,8 @@ package tech.grasshopper.processor.attachment;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -53,12 +55,13 @@ public class AttachmentContentProcessor {
 		StringBuffer sbr = new StringBuffer();
 		sbr.append("<html><body>").append(content).append("</body></html>");
 
-		StringBuffer sbrFile = new StringBuffer();
-		sbrFile.append(reportProperties.getExtentReportDirectory()).append("/")
-				.append(ReportProperties.EXTENT_REPORT_DATA_DIRECTORY).append("/").append(fileNamePrefix).append("-")
+		StringBuffer sbrFile = new StringBuffer().append(fileNamePrefix).append(AttachmentProcessor.FILENAME_SEPARATOR)
 				.append(fileNameSuffix).append(".html");
 
-		try (FileOutputStream outputStream = new FileOutputStream(sbrFile.toString())) {
+		Path path = Paths.get(reportProperties.getExtentReportDirectory(),
+				ReportProperties.EXTENT_REPORT_DATA_DIRECTORY, sbrFile.toString());
+
+		try (FileOutputStream outputStream = new FileOutputStream(path.toString())) {
 			outputStream.write(content.toString().getBytes());
 		} catch (IOException e) {
 			throw new RestAssuredExtentReportPluginException(
