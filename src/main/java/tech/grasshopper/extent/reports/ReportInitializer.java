@@ -44,11 +44,21 @@ public class ReportInitializer {
 
 		extent.attachReporter(spark);
 		try {
-			spark.loadXMLConfig(reportProperties.getExtentConfigFilePath());
+			loadConfigFile(spark);
 		} catch (IOException e) {
 			logger.info("Unable to locate spark configuration file. Creating report with default settings.");
 		}
 		return spark;
+	}
+
+	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
+		String configExt = reportProperties.getExtentConfigFilePath()
+				.substring(reportProperties.getExtentConfigFilePath().lastIndexOf('.') + 1);
+
+		if (configExt.equalsIgnoreCase("xml"))
+			spark.loadXMLConfig(reportProperties.getExtentConfigFilePath());
+		else if (configExt.equalsIgnoreCase("json"))
+			spark.loadJSONConfig(reportProperties.getExtentConfigFilePath());
 	}
 
 	private void hideLogEvents(ExtentSparkReporter spark) {
