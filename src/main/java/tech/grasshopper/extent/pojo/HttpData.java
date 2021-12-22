@@ -41,9 +41,11 @@ public abstract class HttpData {
 	public static HttpData createHttpData(String title) {
 		String[] details = title.split(" ");
 
+		//Status code 200
 		if (title.startsWith("Status code"))
 			return HttpResponseData.builder().statusCode(details[2]).build();
 
+		//GET to https://ghchirp.tech/test/blog
 		return HttpRequestData.builder().httpMethod(details[0]).endpoint(details[2]).build();
 	}
 
