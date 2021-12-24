@@ -1,6 +1,10 @@
 package tech.grasshopper.extent.reports;
 
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -8,6 +12,7 @@ import javax.inject.Singleton;
 import com.aventstack.extentreports.AnalysisStrategy;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.ViewName;
 
 import tech.grasshopper.logging.ReportLogger;
 import tech.grasshopper.properties.ReportProperties;
@@ -32,6 +37,7 @@ public class ReportInitializer {
 		extent.setReportUsesManualConfiguration(true);
 
 		ExtentSparkReporter spark = initializeSparkReport(extent);
+		customizeViewOrder(spark);
 		hideLogEvents(spark);
 		customizeDataLogTable(spark);
 
@@ -40,7 +46,7 @@ public class ReportInitializer {
 
 	private ExtentSparkReporter initializeSparkReport(ExtentReports extent) {
 		ExtentSparkReporter spark = new ExtentSparkReporter(
-				reportProperties.getExtentReportDirectory() + "/SparkReport.html");
+				Paths.get(reportProperties.getExtentReportDirectory(), "ExtentSparkReport.html").toString());
 
 		extent.attachReporter(spark);
 		try {
@@ -52,6 +58,9 @@ public class ReportInitializer {
 	}
 
 	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
+		if (reportProperties.getExtentConfigFilePath().indexOf('.') == -1)
+			return;
+
 		String configExt = reportProperties.getExtentConfigFilePath()
 				.substring(reportProperties.getExtentConfigFilePath().lastIndexOf('.') + 1);
 
@@ -59,6 +68,19 @@ public class ReportInitializer {
 			spark.loadXMLConfig(reportProperties.getExtentConfigFilePath());
 		else if (configExt.equalsIgnoreCase("json"))
 			spark.loadJSONConfig(reportProperties.getExtentConfigFilePath());
+	}
+
+	private void customizeViewOrder(ExtentSparkReporter spark) {
+		if (reportProperties.getExtentSparkViewOrder().isEmpty())
+			return;
+
+		try {
+			List<ViewName> viewOrder = Arrays.stream(reportProperties.getExtentSparkViewOrder().split(","))
+					.map(v -> ViewName.valueOf(v.trim().toUpperCase())).collect(Collectors.toList());
+			spark.viewConfigurer().viewOrder().as(viewOrder).apply();
+		} catch (Exception e) {
+			logger.info("Unable to customize spark report view order. Creating report with default view order.");
+		}
 	}
 
 	private void hideLogEvents(ExtentSparkReporter spark) {

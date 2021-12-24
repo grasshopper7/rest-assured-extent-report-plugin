@@ -33,8 +33,8 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.extentConfigFilePath", defaultValue = "src/test/resources/extent-config.xml")
 	private String extentConfigFilePath;
 
-	@Parameter(property = "extentreport.clearExtentReportData", defaultValue = "true")
-	private boolean clearExtentReportData;
+	@Parameter(property = "extentreport.extentSparkViewOrder", defaultValue = "")
+	private String extentSparkViewOrder;
 
 	@Parameter(property = "extentreport.hidelogEvents", defaultValue = "true")
 	private boolean hidelogEvents;
@@ -85,7 +85,7 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 		reportProperties.setAllureResultsDirectory(allureResultsDirectory);
 		reportProperties.setExtentReportDirectory(extentReportDirectory);
 		reportProperties.setExtentConfigFilePath(extentConfigFilePath);
-		reportProperties.setClearExtentReportData(clearExtentReportData);
+		reportProperties.setExtentSparkViewOrder(extentSparkViewOrder);
 		reportProperties.setHidelogEvents(hidelogEvents);
 	}
 

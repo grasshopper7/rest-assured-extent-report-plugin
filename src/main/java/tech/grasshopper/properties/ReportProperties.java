@@ -11,7 +11,7 @@ public class ReportProperties {
 	private String allureResultsDirectory;
 	private String extentReportDirectory;
 	private String extentConfigFilePath;
-	private boolean clearExtentReportData;
+	private String extentSparkViewOrder;
 	private boolean hidelogEvents;
 
 	public static final String EXTENT_REPORT_DATA_DIRECTORY = "data";
