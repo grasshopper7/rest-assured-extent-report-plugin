@@ -26,9 +26,11 @@ public class ResultExtent {
 
 	private Status status;
 
-	private String statusMessage;
+	@Default
+	private String statusMessage = "";
 
-	private String stackTrace;
+	@Default
+	private String stackTrace = "";
 
 	private Date startTime;
 
