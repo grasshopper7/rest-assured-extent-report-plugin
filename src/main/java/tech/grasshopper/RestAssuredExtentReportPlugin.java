@@ -27,8 +27,11 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.allureResultsDirectory", required = true)
 	private String allureResultsDirectory;
 
-	@Parameter(property = "extentreport.extentReportDirectory", required = true)
+	@Parameter(property = "extentreport.extentReportDirectory", defaultValue = "report")
 	private String extentReportDirectory;
+
+	@Parameter(property = "extentreport.extentReportDirectoryTimeStamp")
+	private String extentReportDirectoryTimeStamp;
 
 	@Parameter(property = "extentreport.extentConfigFilePath", defaultValue = "src/test/resources/extent-config.xml")
 	private String extentConfigFilePath;
@@ -67,8 +70,6 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 
 			List<Result> results = jsonResultsCollector.retrieveResults(reportProperties.getAllureResultsDirectory());
 
-			// Need data validation ??
-
 			Map<String, List<ResultExtent>> extentReportData = resultsProcessor.process(results);
 
 			reportCreator.generate(extentReportData);
@@ -83,7 +84,7 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 
 	private void setReportProperties() {
 		reportProperties.setAllureResultsDirectory(allureResultsDirectory);
-		reportProperties.setExtentReportDirectory(extentReportDirectory);
+		reportProperties.setExtentReportDirectory(extentReportDirectory, extentReportDirectoryTimeStamp);
 		reportProperties.setExtentConfigFilePath(extentConfigFilePath);
 		reportProperties.setExtentSparkViewOrder(extentSparkViewOrder);
 		reportProperties.setHidelogEvents(hidelogEvents);
