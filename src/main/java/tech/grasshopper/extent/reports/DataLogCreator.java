@@ -3,12 +3,15 @@ package tech.grasshopper.extent.reports;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
 import tech.grasshopper.extent.pojo.HttpLogData;
 import tech.grasshopper.extent.pojo.ResultExtent;
 
+@Singleton
 public class DataLogCreator {
 
 	public void generate(ExtentTest methodExtentTest, ResultExtent result) {
