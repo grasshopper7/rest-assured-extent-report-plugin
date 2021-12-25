@@ -1,37 +1,33 @@
 package tech.grasshopper.extent.pojo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.util.Map;
 
-import lombok.Builder.Default;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class HttpRequestData extends HttpData {
-
-	@Default
-	private String httpMethod = "";
-
-	@Default
-	private String endpoint = "";
+public class HttpNoResponseData extends HttpResponseData {
 
 	@Override
 	public int rowCount() {
-		return 2 + super.rowCount();
+		return 0;
+	}
+
+	@Override
+	public boolean containsHttpContentFiles() {
+		return false;
 	}
 
 	@Override
 	public void addPropertiesDisplay(Map<String, String> details) {
-		details.put("Method", httpMethod);
-		details.put("Endpoint", endpoint);
+
 	}
 
 	@Override
 	public void addHttpContentFilesDisplay(Map<String, String> details) {
-		details.put("Request", createFileLinks());
+
 	}
 }

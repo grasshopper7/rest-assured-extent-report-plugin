@@ -1,5 +1,7 @@
 package tech.grasshopper.extent.pojo;
 
+import java.util.Map;
+
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,5 +18,15 @@ public class HttpResponseData extends HttpData {
 	@Override
 	public int rowCount() {
 		return 1 + super.rowCount();
+	}
+
+	@Override
+	public void addPropertiesDisplay(Map<String, String> details) {
+		details.put("Status Code", statusCode);
+	}
+
+	@Override
+	public void addHttpContentFilesDisplay(Map<String, String> details) {
+		details.put("Response", createFileLinks());
 	}
 }

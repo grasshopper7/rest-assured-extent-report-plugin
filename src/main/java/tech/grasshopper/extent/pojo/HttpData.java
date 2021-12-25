@@ -1,5 +1,7 @@
 package tech.grasshopper.extent.pojo;
 
+import java.util.Map;
+
 import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -41,11 +43,11 @@ public abstract class HttpData {
 	public static HttpData createHttpData(String title) {
 		String[] details = title.split(" ");
 
-		//Status code 200
+		// Status code 200
 		if (title.startsWith("Status code"))
 			return HttpResponseData.builder().statusCode(details[2]).build();
 
-		//GET to https://ghchirp.tech/test/blog
+		// GET to https://ghchirp.tech/test/blog
 		return HttpRequestData.builder().httpMethod(details[0]).endpoint(details[2]).build();
 	}
 
@@ -55,9 +57,34 @@ public abstract class HttpData {
 		return 0;
 	}
 
-	public boolean containsHttpContentFiles() {
+	protected boolean containsHttpContentFiles() {
 		if (bodyContentFile.isEmpty() && headersContentFile.isEmpty() && cookiesContentFile.isEmpty())
 			return false;
 		return true;
+	}
+
+	public abstract void addPropertiesDisplay(Map<String, String> details);
+
+	public abstract void addHttpContentFilesDisplay(Map<String, String> details);
+
+	protected String createFileLinks() {
+		StringBuffer sbr = new StringBuffer();
+
+		if (containsHttpContentFiles()) {
+			if (!bodyContentFile.isEmpty())
+				sbr.append(createFileLink(bodyContentFile, "Body"));
+			if (!headersContentFile.isEmpty())
+				sbr.append(createFileLink(headersContentFile, "Headers"));
+			if (!cookiesContentFile.isEmpty())
+				sbr.append(createFileLink(cookiesContentFile, "Cookies"));
+		}
+		return sbr.toString();
+	}
+
+	private String createFileLink(String link, String linkText) {
+		StringBuffer sbr = new StringBuffer();
+		return sbr.append("<a href='#' onClick=\"window.open('").append(link)
+				.append("','','width=700,height=500'); return false;\">").append(linkText).append("</a> &nbsp;&nbsp;")
+				.toString();
 	}
 }
