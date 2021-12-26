@@ -5,7 +5,7 @@
 
 	<groupId>tech.grasshopper</groupId>
 	<artifactId>rest-assured-extent-report-plugin</artifactId>
-	<version>0.1</version>
+	<version>1.0.0</version>
 	<packaging>maven-plugin</packaging>
 
 	<properties>
