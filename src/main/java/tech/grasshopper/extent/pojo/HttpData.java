@@ -57,7 +57,7 @@ public abstract class HttpData {
 		return 0;
 	}
 
-	protected boolean containsHttpContentFiles() {
+	public boolean containsHttpContentFiles() {
 		if (bodyContentFile.isEmpty() && headersContentFile.isEmpty() && cookiesContentFile.isEmpty())
 			return false;
 		return true;

@@ -7,6 +7,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class HttpNoResponseData extends HttpResponseData implements HttpNoData {
+public class HttpNoRequestData extends HttpRequestData implements HttpNoData {
 
 }

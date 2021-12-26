@@ -8,7 +8,8 @@ import lombok.Builder.Default;
 @Builder
 public class HttpLogData {
 
-	private HttpRequestData httpRequestData;
+	@Default
+	private HttpRequestData httpRequestData = HttpNoRequestData.builder().build();
 
 	@Default
 	private HttpResponseData httpResponseData = HttpNoResponseData.builder().build();
