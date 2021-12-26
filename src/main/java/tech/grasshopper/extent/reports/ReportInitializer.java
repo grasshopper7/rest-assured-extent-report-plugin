@@ -71,7 +71,7 @@ public class ReportInitializer {
 	}
 
 	private void customizeViewOrder(ExtentSparkReporter spark) {
-		if (reportProperties.getExtentSparkViewOrder().isEmpty())
+		if (reportProperties.getExtentSparkViewOrder() == null)
 			return;
 
 		try {
