@@ -2,12 +2,21 @@ package tech.grasshopper.exception;
 
 import java.lang.reflect.Constructor;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import tech.grasshopper.extent.pojo.ResultExtent;
+import tech.grasshopper.logging.ReportLogger;
 
 @Singleton
 public class ExceptionParser {
+
+	private ReportLogger logger;
+
+	@Inject
+	public ExceptionParser(ReportLogger logger) {
+		this.logger = logger;
+	}
 
 	public Throwable parseStackTrace(ResultExtent result, String stackTrace) {
 
@@ -39,25 +48,22 @@ public class ExceptionParser {
 		return exceptionClzName;
 	}
 
-	private Throwable createThrowableInstance(String className, String parameter) {
-		Throwable throwableInstance = null;
+	private Throwable createThrowableInstance(String className, String message) {
 		Class<?> throwableClass = null;
 		try {
 			throwableClass = Class.forName(className);
+
+			if (!Throwable.class.isAssignableFrom(throwableClass))
+				throw new ClassNotFoundException();
 		} catch (ClassNotFoundException e) {
-			if (parameter.isEmpty())
-				throwableInstance = new Exception();
-			else
-				throwableInstance = new Exception(parameter);
-			return throwableInstance;
+			logger.info(className + " class cannot be found or not an instance of Throwable.");
+			return new Exception("Generic Exception " + message);
 		}
 
-		if (parameter.isEmpty())
-			throwableInstance = createThrowableInstanceWithoutMessage(className, throwableClass);
+		if (message.isEmpty())
+			return createThrowableInstanceWithoutMessage(className, throwableClass);
 		else
-			throwableInstance = createThrowableInstanceWithMessage(className, parameter, throwableClass);
-
-		return throwableInstance;
+			return createThrowableInstanceWithMessage(className, message, throwableClass);
 	}
 
 	private Throwable createThrowableInstanceWithoutMessage(String className, Class<?> throwableClass) {
@@ -67,6 +73,7 @@ public class ExceptionParser {
 			throwableConstructor = throwableClass.getConstructor();
 			throwableInstance = (Throwable) throwableConstructor.newInstance();
 		} catch (ReflectiveOperationException | SecurityException | IllegalArgumentException e) {
+			logger.info(className + " constructor cannot be found or cannot be instanciated.");
 			throwableInstance = new Exception("Generic Exception");
 		}
 		return throwableInstance;
@@ -79,6 +86,7 @@ public class ExceptionParser {
 			throwableConstructor = throwableClass.getConstructor(Object.class);
 			throwableInstance = (Throwable) throwableConstructor.newInstance(message);
 		} catch (ReflectiveOperationException | SecurityException | IllegalArgumentException e) {
+			logger.info(className + " constructor cannot be found or cannot be instanciated.");
 			throwableInstance = new Exception("Generic Exception " + message);
 		}
 		return throwableInstance;
