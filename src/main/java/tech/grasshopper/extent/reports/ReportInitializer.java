@@ -32,7 +32,6 @@ public class ReportInitializer {
 
 	public ExtentReports initialize() {
 		ExtentReports extent = new ExtentReports();
-
 		extent.setAnalysisStrategy(AnalysisStrategy.CLASS);
 		extent.setReportUsesManualConfiguration(true);
 
@@ -58,16 +57,17 @@ public class ReportInitializer {
 	}
 
 	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
-		if (reportProperties.getExtentConfigFilePath().indexOf('.') == -1)
+		String configFilePath = reportProperties.getExtentConfigFilePath();
+
+		if (configFilePath.indexOf('.') == -1)
 			return;
 
-		String configExt = reportProperties.getExtentConfigFilePath()
-				.substring(reportProperties.getExtentConfigFilePath().lastIndexOf('.') + 1);
+		String configExt = configFilePath.substring(configFilePath.lastIndexOf('.') + 1);
 
 		if (configExt.equalsIgnoreCase("xml"))
-			spark.loadXMLConfig(reportProperties.getExtentConfigFilePath());
+			spark.loadXMLConfig(configFilePath);
 		else if (configExt.equalsIgnoreCase("json"))
-			spark.loadJSONConfig(reportProperties.getExtentConfigFilePath());
+			spark.loadJSONConfig(configFilePath);
 	}
 
 	private void customizeViewOrder(ExtentSparkReporter spark) {
@@ -79,7 +79,7 @@ public class ReportInitializer {
 					.map(v -> ViewName.valueOf(v.trim().toUpperCase())).collect(Collectors.toList());
 			spark.viewConfigurer().viewOrder().as(viewOrder).apply();
 		} catch (Exception e) {
-			logger.info("Unable to customize spark report view order. Creating report with default view order.");
+			logger.info("Unable to customize Spark report view order. Creating report with default view order.");
 		}
 	}
 
