@@ -21,7 +21,8 @@ public class MethodLevelTestCreator {
 
 		result.getCategories().forEach(t -> methodExtentTest.assignCategory(t.getName()));
 		result.getAuthors().forEach(t -> methodExtentTest.assignAuthor(t.getName()));
-		
+		result.getDevices().forEach(t -> methodExtentTest.assignDevice(t.getName()));
+
 		return methodExtentTest;
 	}
 }

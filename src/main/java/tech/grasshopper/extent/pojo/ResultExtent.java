@@ -9,6 +9,7 @@ import java.util.Set;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.model.Author;
 import com.aventstack.extentreports.model.Category;
+import com.aventstack.extentreports.model.Device;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,6 +44,9 @@ public class ResultExtent {
 
 	@Default
 	private Set<Category> categories = new HashSet<>();
+
+	@Default
+	private Set<Device> devices = new HashSet<>();
 
 	@Default
 	private List<HttpLogData> dataLogs = new ArrayList<>();

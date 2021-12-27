@@ -12,7 +12,7 @@ public class Result {
 
 	private String name;
 
-	private String status;
+	private String status= "";
 
 	private StatusDetails statusDetails = new StatusDetails();
 
@@ -22,7 +22,7 @@ public class Result {
 
 	private long stop;
 
-	private String fullName;
+	private String fullName = "";
 
 	private List<Label> labels = new ArrayList<>();
 }

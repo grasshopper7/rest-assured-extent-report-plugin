@@ -58,6 +58,7 @@ public class ResultsProcessor {
 				.className(labelProcessor.processClassName(result.getLabels()))
 				.categories(labelProcessor.processCategories(result.getLabels()))
 				.authors(labelProcessor.processAuthors(result.getLabels()))
+				.devices(labelProcessor.processDevices(result.getLabels()))
 				.dataLogs(attachmentProcessor.process(result.getAttachments())).build();
 	}
 }
