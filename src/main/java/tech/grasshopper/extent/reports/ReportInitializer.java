@@ -50,7 +50,7 @@ public class ReportInitializer {
 		extent.attachReporter(spark);
 		try {
 			loadConfigFile(spark);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.info("Unable to locate spark configuration file. Creating report with default settings.");
 		}
 		return spark;
@@ -58,6 +58,9 @@ public class ReportInitializer {
 
 	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
 		String configFilePath = reportProperties.getExtentConfigFilePath();
+
+		if (configFilePath == null)
+			return;
 
 		if (configFilePath.indexOf('.') == -1)
 			return;

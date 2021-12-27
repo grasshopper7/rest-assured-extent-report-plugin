@@ -33,7 +33,7 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.extentReportDirectoryTimeStamp")
 	private String extentReportDirectoryTimeStamp;
 
-	@Parameter(property = "extentreport.extentConfigFilePath", defaultValue = "src/test/resources/spark-config.xml")
+	@Parameter(property = "extentreport.extentConfigFilePath")
 	private String extentConfigFilePath;
 
 	@Parameter(property = "extentreport.extentSparkViewOrder")
