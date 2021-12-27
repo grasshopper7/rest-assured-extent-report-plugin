@@ -9,8 +9,8 @@
 	<packaging>maven-plugin</packaging>
 
 	<name>rest-assured-extent-report-plugin</name>
-	<url>https://ghchirp.tech/</url>
-	<description>Spark Extent Report generation for Rest Assured API
+	<url>https://ghchirp.tech/3791</url>
+	<description>Spark Extent Report generation for REST Assured API
 		Testing
 	</description>
 
@@ -40,7 +40,7 @@
 		<extent.version>5.0.9</extent.version>
 		<lombok.version>1.18.18</lombok.version>
 		<jsoup.version>1.13.1</jsoup.version>
-		<extent.report.directory>report</extent.report.directory>
+		<annotation.version>1.0</annotation.version>
 	</properties>
 
 	<scm>
@@ -177,5 +177,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
