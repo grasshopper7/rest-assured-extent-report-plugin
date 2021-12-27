@@ -27,17 +27,20 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.allureResultsDirectory", required = true)
 	private String allureResultsDirectory;
 
-	@Parameter(property = "extentreport.extentReportDirectory", defaultValue = "report")
-	private String extentReportDirectory;
+	@Parameter(property = "extentreport.reportDirectory", defaultValue = "report")
+	private String reportDirectory;
 
-	@Parameter(property = "extentreport.extentReportDirectoryTimeStamp")
-	private String extentReportDirectoryTimeStamp;
+	@Parameter(property = "extentreport.reportDirectoryTimeStamp")
+	private String reportDirectoryTimeStamp;
 
-	@Parameter(property = "extentreport.extentConfigFilePath")
-	private String extentConfigFilePath;
+	@Parameter(property = "extentreport.configFilePath")
+	private String configFilePath;
 
-	@Parameter(property = "extentreport.extentSparkViewOrder")
-	private String extentSparkViewOrder;
+	@Parameter(property = "extentreport.systemInfoFilePath")
+	private String systemInfoFilePath;
+
+	@Parameter(property = "extentreport.sparkViewOrder")
+	private String sparkViewOrder;
 
 	@Parameter(property = "extentreport.hidelogEvents", defaultValue = "true")
 	private boolean hidelogEvents;
@@ -84,16 +87,17 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 
 	private void setReportProperties() {
 		reportProperties.setAllureResultsDirectory(allureResultsDirectory);
-		reportProperties.setExtentReportDirectory(extentReportDirectory, extentReportDirectoryTimeStamp);
-		reportProperties.setExtentConfigFilePath(extentConfigFilePath);
-		reportProperties.setExtentSparkViewOrder(extentSparkViewOrder);
+		reportProperties.setReportDirectory(reportDirectory, reportDirectoryTimeStamp);
+		reportProperties.setConfigFilePath(configFilePath);
+		reportProperties.setSystemInfoFilePath(systemInfoFilePath);
+		reportProperties.setSparkViewOrder(sparkViewOrder);
 		reportProperties.setHidelogEvents(hidelogEvents);
 	}
 
 	private void createAttachmentFolder() {
 		try {
-			Files.createDirectories(Paths.get(reportProperties.getExtentReportDirectory(),
-					ReportProperties.EXTENT_REPORT_DATA_DIRECTORY));
+			Files.createDirectories(
+					Paths.get(reportProperties.getReportDirectory(), ReportProperties.EXTENT_REPORT_DATA_DIRECTORY));
 		} catch (IOException e) {
 			throw new RestAssuredExtentReportPluginException("Unable to create report attachments directory.", e);
 		}

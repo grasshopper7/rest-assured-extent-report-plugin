@@ -44,8 +44,7 @@ public class ResultsProcessor {
 	}
 
 	private void deleteExistingAttachmentFiles() {
-		Path path = Paths.get(reportProperties.getExtentReportDirectory(),
-				ReportProperties.EXTENT_REPORT_DATA_DIRECTORY);
+		Path path = Paths.get(reportProperties.getReportDirectory(), ReportProperties.EXTENT_REPORT_DATA_DIRECTORY);
 
 		if (Files.exists(path))
 			Arrays.stream(new File(path.toString()).listFiles()).forEach(File::delete);

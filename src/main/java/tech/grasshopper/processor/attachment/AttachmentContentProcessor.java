@@ -58,8 +58,8 @@ public class AttachmentContentProcessor {
 		StringBuffer sbrFile = new StringBuffer().append(fileNamePrefix).append(AttachmentProcessor.FILENAME_SEPARATOR)
 				.append(fileNameSuffix).append(".html");
 
-		Path path = Paths.get(reportProperties.getExtentReportDirectory(),
-				ReportProperties.EXTENT_REPORT_DATA_DIRECTORY, sbrFile.toString());
+		Path path = Paths.get(reportProperties.getReportDirectory(), ReportProperties.EXTENT_REPORT_DATA_DIRECTORY,
+				sbrFile.toString());
 
 		try (FileOutputStream outputStream = new FileOutputStream(path.toString())) {
 			outputStream.write(content.toString().getBytes());

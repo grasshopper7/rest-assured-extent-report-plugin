@@ -18,10 +18,11 @@ public class ReportProperties {
 	private String allureResultsDirectory;
 
 	@Setter(value = AccessLevel.NONE)
-	private String extentReportDirectory;
+	private String reportDirectory;
 
-	private String extentConfigFilePath;
-	private String extentSparkViewOrder;
+	private String configFilePath;
+	private String systemInfoFilePath;
+	private String sparkViewOrder;
 	private boolean hidelogEvents;
 
 	public static final String EXTENT_REPORT_DATA_DIRECTORY = "data";
@@ -36,20 +37,20 @@ public class ReportProperties {
 		this.logger = logger;
 	}
 
-	public void setExtentReportDirectory(String extentReportDirectory, String extentReportDirectoryTimeStamp) {
+	public void setReportDirectory(String extentReportDirectory, String extentReportDirectoryTimeStamp) {
 		if (extentReportDirectoryTimeStamp == null)
-			this.extentReportDirectory = extentReportDirectory;
+			this.reportDirectory = extentReportDirectory;
 
 		else {
 			try {
 				DateTimeFormatter timeStampFormat = DateTimeFormatter.ofPattern(extentReportDirectoryTimeStamp);
 				String timeStampStr = timeStampFormat.format(LocalDateTime.now());
 
-				this.extentReportDirectory = extentReportDirectory + " " + timeStampStr;
+				this.reportDirectory = extentReportDirectory + " " + timeStampStr;
 			} catch (Exception e) {
 				logger.info(
 						"Unable to process supplied date time format pattern. Creating report with default directory settings.");
-				this.extentReportDirectory = extentReportDirectory;
+				this.reportDirectory = extentReportDirectory;
 			}
 		}
 	}

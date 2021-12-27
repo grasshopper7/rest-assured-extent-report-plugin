@@ -1,9 +1,12 @@
 package tech.grasshopper.extent.reports;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -35,6 +38,8 @@ public class ReportInitializer {
 		extent.setAnalysisStrategy(AnalysisStrategy.CLASS);
 		extent.setReportUsesManualConfiguration(true);
 
+		addSystemInfoProperties(extent);
+
 		ExtentSparkReporter spark = initializeSparkReport(extent);
 		customizeViewOrder(spark);
 		hideLogEvents(spark);
@@ -43,9 +48,26 @@ public class ReportInitializer {
 		return extent;
 	}
 
+	private void addSystemInfoProperties(ExtentReports extent) {
+		String systemInfoFilePath = reportProperties.getSystemInfoFilePath();
+
+		if (systemInfoFilePath == null)
+			return;
+
+		Properties properties = new Properties();
+		try {
+			InputStream is = new FileInputStream(systemInfoFilePath);
+			properties.load(is);
+		} catch (IOException e) {
+			logger.info("Unable to load system info properties file.");
+			return;
+		}
+		properties.forEach((k, v) -> extent.setSystemInfo(String.valueOf(k), String.valueOf(v)));
+	}
+
 	private ExtentSparkReporter initializeSparkReport(ExtentReports extent) {
 		ExtentSparkReporter spark = new ExtentSparkReporter(
-				Paths.get(reportProperties.getExtentReportDirectory(), "ExtentSparkReport.html").toString());
+				Paths.get(reportProperties.getReportDirectory(), "ExtentSparkReport.html").toString());
 
 		extent.attachReporter(spark);
 		try {
@@ -57,7 +79,7 @@ public class ReportInitializer {
 	}
 
 	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
-		String configFilePath = reportProperties.getExtentConfigFilePath();
+		String configFilePath = reportProperties.getConfigFilePath();
 
 		if (configFilePath == null)
 			return;
@@ -74,11 +96,11 @@ public class ReportInitializer {
 	}
 
 	private void customizeViewOrder(ExtentSparkReporter spark) {
-		if (reportProperties.getExtentSparkViewOrder() == null)
+		if (reportProperties.getSparkViewOrder() == null)
 			return;
 
 		try {
-			List<ViewName> viewOrder = Arrays.stream(reportProperties.getExtentSparkViewOrder().split(","))
+			List<ViewName> viewOrder = Arrays.stream(reportProperties.getSparkViewOrder().split(","))
 					.map(v -> ViewName.valueOf(v.trim().toUpperCase())).collect(Collectors.toList());
 			spark.viewConfigurer().viewOrder().as(viewOrder).apply();
 		} catch (Exception e) {
