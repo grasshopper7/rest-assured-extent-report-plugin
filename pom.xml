@@ -18,6 +18,7 @@
 		<extent.version>5.0.9</extent.version>
 		<lombok.version>1.18.18</lombok.version>
 		<jsoup.version>1.13.1</jsoup.version>
+		<annotation.version>1.0.0</annotation.version>
 	</properties>
 
 	<dependencies>
@@ -52,6 +53,11 @@
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>tech.grasshopper</groupId>
+			<artifactId>extentreport-allure-annotation</artifactId>
+			<version>${annotation.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -72,5 +78,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
