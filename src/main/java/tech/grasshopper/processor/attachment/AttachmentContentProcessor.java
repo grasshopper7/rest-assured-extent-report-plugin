@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import tech.grasshopper.exception.RestAssuredExtentReportPluginException;
 import tech.grasshopper.properties.ReportProperties;
 
@@ -24,7 +26,7 @@ public class AttachmentContentProcessor {
 
 	public void processBodyContent(String content, String fileNamePrefix) {
 		StringBuffer sbr = new StringBuffer();
-		sbr.append("<div><pre>").append(content).append("</pre></div>");
+		sbr.append("<div><pre>").append(StringEscapeUtils.escapeHtml4(content)).append("</pre></div>");
 		createDisplayFiles(sbr, fileNamePrefix, ReportProperties.BODY);
 	}
 
@@ -44,7 +46,8 @@ public class AttachmentContentProcessor {
 		sbr.append("<table style=\"border: 1px solid black;\">");
 		data.forEach((k, v) -> {
 			sbr.append("<tr style=\"border: 1px solid black;\">").append("<td style=\"border: 1px solid black;\">")
-					.append(k).append("</td>").append("<td style=\"border: 1px solid black;\">").append(v)
+					.append(StringEscapeUtils.escapeHtml4(k)).append("</td>")
+					.append("<td style=\"border: 1px solid black;\">").append(StringEscapeUtils.escapeHtml4(v))
 					.append("</td>").append("</tr>");
 		});
 		sbr.append("</table>");
