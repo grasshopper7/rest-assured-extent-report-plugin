@@ -51,7 +51,7 @@ public class ReportInitializer {
 	private void addSystemInfoProperties(ExtentReports extent) {
 		String systemInfoFilePath = reportProperties.getSystemInfoFilePath();
 
-		if (systemInfoFilePath == null)
+		if (systemInfoFilePath == null || systemInfoFilePath.indexOf('.') == -1)
 			return;
 
 		Properties properties = new Properties();
@@ -59,7 +59,7 @@ public class ReportInitializer {
 			InputStream is = new FileInputStream(systemInfoFilePath);
 			properties.load(is);
 		} catch (IOException e) {
-			logger.info("Unable to load system info properties file.");
+			logger.info("Unable to load system info properties. No system info data available.");
 			return;
 		}
 		properties.forEach((k, v) -> extent.setSystemInfo(String.valueOf(k), String.valueOf(v)));
@@ -73,7 +73,7 @@ public class ReportInitializer {
 		try {
 			loadConfigFile(spark);
 		} catch (Exception e) {
-			logger.info("Unable to locate spark configuration file. Creating report with default settings.");
+			logger.info("Unable to locate spark configuration. Creating report with default settings.");
 		}
 		return spark;
 	}
@@ -81,10 +81,7 @@ public class ReportInitializer {
 	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
 		String configFilePath = reportProperties.getConfigFilePath();
 
-		if (configFilePath == null)
-			return;
-
-		if (configFilePath.indexOf('.') == -1)
+		if (configFilePath == null || configFilePath.indexOf('.') == -1)
 			return;
 
 		String configExt = configFilePath.substring(configFilePath.lastIndexOf('.') + 1);

@@ -24,25 +24,25 @@ import tech.grasshopper.results.JsonResultsCollector;
 @Mojo(name = "extentreport")
 public class RestAssuredExtentReportPlugin extends AbstractMojo {
 
-	@Parameter(property = "extentreport.allureResultsDirectory", required = true)
+	@Parameter(property = "extentreport.allureResultsDirectory", defaultValue = ReportProperties.ALLURE_RESULTS_DIRECTORY)
 	private String allureResultsDirectory;
 
-	@Parameter(property = "extentreport.reportDirectory", defaultValue = "report")
+	@Parameter(property = "extentreport.reportDirectory", defaultValue = ReportProperties.REPORT_DIRECTORY)
 	private String reportDirectory;
 
-	@Parameter(property = "extentreport.reportDirectoryTimeStamp")
+	@Parameter(property = "extentreport.reportDirectoryTimeStamp", defaultValue = ReportProperties.REPORT_DIRECTORY_TIMESTAMP)
 	private String reportDirectoryTimeStamp;
 
-	@Parameter(property = "extentreport.configFilePath")
+	@Parameter(property = "extentreport.configFilePath", defaultValue = ReportProperties.REPORT_CONFIG_FILE)
 	private String configFilePath;
 
-	@Parameter(property = "extentreport.systemInfoFilePath")
+	@Parameter(property = "extentreport.systemInfoFilePath", defaultValue = ReportProperties.REPORT_SYSTEM_INFO_FILE)
 	private String systemInfoFilePath;
 
 	@Parameter(property = "extentreport.sparkViewOrder")
 	private String sparkViewOrder;
 
-	@Parameter(property = "extentreport.hidelogEvents", defaultValue = "true")
+	@Parameter(property = "extentreport.hidelogEvents", defaultValue = ReportProperties.REPORT_HIDE_LOG_EVENTS)
 	private boolean hidelogEvents;
 
 	private JsonResultsCollector jsonResultsCollector;
