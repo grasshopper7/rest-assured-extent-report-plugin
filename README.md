@@ -24,3 +24,23 @@ For more details refer to this [article](http://ghchirp.tech/3791/). Sample usag
 </plugin>
 ```
 Default configuration details and tips to be modify them can be found in the article. For more details refer to the relevant POM - [JUnit4](https://github.com/grasshopper7/rest-assured-report-junit4/blob/master/pom.xml), [JUnit5](https://github.com/grasshopper7/rest-assured-report-junit5/blob/master/pom.xml), [TestNG](https://github.com/grasshopper7/rest-assured-report-testng/blob/master/pom.xml).
+
+**Report Images** - 
+
+*Dashboard*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/dashboard.png)
+
+*Tests*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/tests.png)
+
+*Exception*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/exception.png)
+
+*Category*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/category.png)
+
+*Author*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/author.png)
+
+*Device*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/device.png)
