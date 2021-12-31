@@ -3,6 +3,7 @@ package tech.grasshopper.extent.reports;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +52,8 @@ public class ReportInitializer {
 	private void addSystemInfoProperties(ExtentReports extent) {
 		String systemInfoFilePath = reportProperties.getSystemInfoFilePath();
 
-		if (systemInfoFilePath == null || systemInfoFilePath.indexOf('.') == -1)
+		if (systemInfoFilePath == null || systemInfoFilePath.indexOf('.') == -1
+				|| !Files.exists(Paths.get(systemInfoFilePath)))
 			return;
 
 		Properties properties = new Properties();
@@ -81,7 +83,7 @@ public class ReportInitializer {
 	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
 		String configFilePath = reportProperties.getConfigFilePath();
 
-		if (configFilePath == null || configFilePath.indexOf('.') == -1)
+		if (configFilePath == null || configFilePath.indexOf('.') == -1 || !Files.exists(Paths.get(configFilePath)))
 			return;
 
 		String configExt = configFilePath.substring(configFilePath.lastIndexOf('.') + 1);
