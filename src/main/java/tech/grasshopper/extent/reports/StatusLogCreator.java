@@ -25,10 +25,10 @@ public class StatusLogCreator {
 		if (result.getStatus() == Status.FAIL) {
 			String failTrace = result.getStackTrace().equals("") ? "No fail message." : result.getStackTrace();
 
-			Throwable throwable = exceptionParser.parseStackTrace(result, failTrace);
+			Throwable throwable = exceptionParser.parseStackTrace(failTrace);
 			// Hack to remove stack due to exception creation
 			throwable.setStackTrace(new StackTraceElement[0]);
-			
+
 			methodExtentTest.fail(throwable);
 		} else if (result.getStatus() == Status.SKIP) {
 

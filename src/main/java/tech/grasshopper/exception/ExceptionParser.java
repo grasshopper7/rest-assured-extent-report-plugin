@@ -1,11 +1,12 @@
 package tech.grasshopper.exception;
 
 import java.lang.reflect.Constructor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import tech.grasshopper.extent.pojo.ResultExtent;
 import tech.grasshopper.logging.ReportLogger;
 
 @Singleton
@@ -18,76 +19,70 @@ public class ExceptionParser {
 		this.logger = logger;
 	}
 
-	public Throwable parseStackTrace(ResultExtent result, String stackTrace) {
+	public Throwable parseStackTrace(String stackTrace) {
+		String[] details = retrieveExceptionNameAndStack(stackTrace);
 
-		String exceptionClzName = exceptionClassName(stackTrace);
-		String exceptionMessage = createExceptionMessage(result.getStatusMessage(), stackTrace);
+		String exceptionClzName = details[0];
+		String exceptionMessage = details[1];
 
 		return createThrowableInstance(exceptionClzName, exceptionMessage);
 	}
 
-	private String createExceptionMessage(String exceptionMessage, String stackTrace) {
-		int firstNewLineChr = stackTrace.indexOf("\r\n");
+	private String[] retrieveExceptionNameAndStack(String stackTrace) {
+		String[] details = { "", "" };
 
-		// Add remaining stack,if available, to message for display purposes. HACK
-		if (firstNewLineChr > -1)
-			exceptionMessage = exceptionMessage + " " + stackTrace.substring(firstNewLineChr + 1);
-		return exceptionMessage;
-	}
+		Matcher m = Pattern.compile("\\R").matcher(stackTrace);
+		// Exception stacktrace will always contain and end with newline character.
+		if (m.find()) {
+			String excepNameMsg = stackTrace.substring(0, m.start());
 
-	private String exceptionClassName(String stackTrace) {
-		int firstNewLineChr = stackTrace.indexOf("\r\n");
-
-		// Get first line
-		String exceptionClzNameMessage = (firstNewLineChr > -1) ? stackTrace.substring(0, firstNewLineChr) : stackTrace;
-
-		// Get exception name from first line
-		int colonChrIndex = exceptionClzNameMessage.indexOf(':');
-		String exceptionClzName = (colonChrIndex > -1) ? exceptionClzNameMessage.substring(0, colonChrIndex)
-				: exceptionClzNameMessage;
-		return exceptionClzName;
+			int colonIndex = excepNameMsg.indexOf(":");
+			if (colonIndex > -1) {
+				// Name: Msg\Rat stacktrace\R
+				details[0] = excepNameMsg.substring(0, colonIndex);
+				details[1] = stackTrace.substring(colonIndex + 2);
+			} else {
+				// Name\Rat stacktrace\R
+				details[0] = excepNameMsg;
+				details[1] = stackTrace.substring(m.start());
+			}
+		}
+		return details;
 	}
 
 	private Throwable createThrowableInstance(String className, String message) {
 		Class<?> throwableClass = null;
+
 		try {
 			throwableClass = Class.forName(className);
-
 			if (!Throwable.class.isAssignableFrom(throwableClass))
 				throw new ClassNotFoundException();
 		} catch (ClassNotFoundException e) {
-			logger.info(className + " class cannot be found or not an instance of Throwable.");
-			return new Exception("Generic Exception " + message);
+			logger.warn(className + " class cannot be found or not an instance of Throwable.");
+			return new Exception("Generic Exception for " + className + " : " + message);
 		}
-
-		if (message.isEmpty())
-			return createThrowableInstanceWithoutMessage(className, throwableClass);
-		else
-			return createThrowableInstanceWithMessage(className, message, throwableClass);
+		return createThrowableInstance(className, message, throwableClass);
 	}
 
-	private Throwable createThrowableInstanceWithoutMessage(String className, Class<?> throwableClass) {
+	private Throwable createThrowableInstance(String className, String message, Class<?> throwableClass) {
 		Constructor<?> throwableConstructor = null;
 		Throwable throwableInstance = null;
-		try {
-			throwableConstructor = throwableClass.getConstructor();
-			throwableInstance = (Throwable) throwableConstructor.newInstance();
-		} catch (ReflectiveOperationException | SecurityException | IllegalArgumentException e) {
-			logger.info(className + " constructor cannot be found or cannot be instanciated.");
-			throwableInstance = new Exception("Generic Exception");
-		}
-		return throwableInstance;
-	}
 
-	private Throwable createThrowableInstanceWithMessage(String className, String message, Class<?> throwableClass) {
-		Constructor<?> throwableConstructor = null;
-		Throwable throwableInstance = null;
 		try {
-			throwableConstructor = throwableClass.getConstructor(Object.class);
-			throwableInstance = (Throwable) throwableConstructor.newInstance(message);
-		} catch (ReflectiveOperationException | SecurityException | IllegalArgumentException e) {
-			logger.info(className + " constructor cannot be found or cannot be instanciated.");
-			throwableInstance = new Exception("Generic Exception " + message);
+			if (message.isEmpty()) {
+				throwableConstructor = throwableClass.getConstructor();
+				throwableInstance = (Throwable) throwableConstructor.newInstance();
+			} else {
+				try {
+					throwableConstructor = throwableClass.getConstructor(String.class);
+				} catch (NoSuchMethodException e) {
+					throwableConstructor = throwableClass.getConstructor(Object.class);
+				}
+				throwableInstance = (Throwable) throwableConstructor.newInstance(message);
+			}
+		} catch (ReflectiveOperationException | SecurityException e) {
+			logger.warn(className + " constructor cannot be found or cannot be instanciated.");
+			throwableInstance = new Exception("Generic Exception for " + className + " : " + message);
 		}
 		return throwableInstance;
 	}
