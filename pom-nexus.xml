@@ -5,7 +5,7 @@
 
 	<groupId>tech.grasshopper</groupId>
 	<artifactId>rest-assured-extent-report-plugin</artifactId>
-	<version>1.3.0</version>
+	<version>1.4.0</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>rest-assured-extent-report-plugin</name>
@@ -38,6 +38,7 @@
 
 		<gson.version>2.8.6</gson.version>
 		<extent.version>5.0.9</extent.version>
+		<pdf-rest.version>1.0.0</pdf-rest.version>
 		<lombok.version>1.18.18</lombok.version>
 		<jsoup.version>1.13.1</jsoup.version>
 		<annotation.version>1.0</annotation.version>
@@ -68,6 +69,11 @@
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>${extent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>tech.grasshopper</groupId>
+			<artifactId>pdf-rest-assured-report</artifactId>
+			<version>${pdf-rest.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
