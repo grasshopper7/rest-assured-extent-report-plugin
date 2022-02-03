@@ -1,12 +1,11 @@
 package tech.grasshopper.exception;
 
 import java.lang.reflect.Constructor;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import tech.grasshopper.extent.pojo.ResultExtent;
 import tech.grasshopper.logging.ReportLogger;
 
 @Singleton
@@ -19,36 +18,58 @@ public class ExceptionParser {
 		this.logger = logger;
 	}
 
-	public Throwable parseStackTrace(String stackTrace) {
-		String[] details = retrieveExceptionNameAndStack(stackTrace);
+	public Throwable parseStackTrace(ResultExtent result) {
+		String exceptionClzName = "java.lang.Exception";
+		String exceptionMessage = "Error in parsing stacktrace.";
 
-		String exceptionClzName = details[0];
-		String exceptionMessage = details[1];
+		if (!result.getStackTrace().isEmpty()) {
+			String[] details = retrieveExceptionNameAndMessage(result);
 
+			if (!details[0].isEmpty()) {
+				exceptionClzName = details[0];
+				exceptionMessage = details[1];
+			}
+		}
 		return createThrowableInstance(exceptionClzName, exceptionMessage);
 	}
 
-	private String[] retrieveExceptionNameAndStack(String stackTrace) {
+	// Only displays exception name and message
+	private String[] retrieveExceptionNameAndMessage(ResultExtent result) {
 		String[] details = { "", "" };
 
-		Matcher m = Pattern.compile("\\R").matcher(stackTrace);
-		// Exception stacktrace will always contain and end with newline character.
-		if (m.find()) {
-			String excepNameMsg = stackTrace.substring(0, m.start());
+		String[] lines = result.getStackTrace().split("\\R");
 
-			int colonIndex = excepNameMsg.indexOf(":");
+		// Exception stacktrace will always contain and end with newline character.
+		if (lines.length > 0) {
+			int colonIndex = lines[0].indexOf(":");
+
 			if (colonIndex > -1) {
 				// Name: Msg\Rat stacktrace\R
-				details[0] = excepNameMsg.substring(0, colonIndex);
-				details[1] = stackTrace.substring(colonIndex + 2);
+				details[0] = lines[0].substring(0, colonIndex);
 			} else {
 				// Name\Rat stacktrace\R
-				details[0] = excepNameMsg;
-				details[1] = stackTrace.substring(m.start());
+				details[0] = lines[0];
 			}
+			details[1] = result.getStatusMessage();
 		}
 		return details;
 	}
+
+	// Too many unwanted details in stacktrace.
+	/*
+	 * private String[] retrieveExceptionNameAndStack(String stackTrace) { String[]
+	 * details = { "", "" };
+	 * 
+	 * Matcher m = Pattern.compile("\\R").matcher(stackTrace); // Exception
+	 * stacktrace will always contain and end with newline character. if (m.find())
+	 * { String excepNameMsg = stackTrace.substring(0, m.start());
+	 * 
+	 * int colonIndex = excepNameMsg.indexOf(":"); if (colonIndex > -1) { // Name:
+	 * Msg\Rat stacktrace\R details[0] = excepNameMsg.substring(0, colonIndex);
+	 * details[1] = stackTrace.substring(colonIndex + 2); } else { // Name\Rat
+	 * stacktrace\R details[0] = excepNameMsg; details[1] =
+	 * stackTrace.substring(m.start()); } } return details; }
+	 */
 
 	private Throwable createThrowableInstance(String className, String message) {
 		Class<?> throwableClass = null;
