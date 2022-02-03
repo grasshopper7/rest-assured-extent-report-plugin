@@ -20,6 +20,7 @@ import com.aventstack.extentreports.reporter.configuration.ViewName;
 
 import tech.grasshopper.logging.ReportLogger;
 import tech.grasshopper.properties.ReportProperties;
+import tech.grasshopper.reporter.RestAssuredPDFReporter;
 
 @Singleton
 public class ReportInitializer {
@@ -46,6 +47,8 @@ public class ReportInitializer {
 		hideLogEvents(spark);
 		customizeDataLogTable(spark);
 
+		initializePdfReport(extent);
+
 		return extent;
 	}
 
@@ -69,7 +72,7 @@ public class ReportInitializer {
 
 	private ExtentSparkReporter initializeSparkReport(ExtentReports extent) {
 		ExtentSparkReporter spark = new ExtentSparkReporter(
-				Paths.get(reportProperties.getReportDirectory(), "ExtentSparkReport.html").toString());
+				Paths.get(reportProperties.getReportDirectory(), "SparkReport.html").toString());
 
 		extent.attachReporter(spark);
 		try {
@@ -117,5 +120,18 @@ public class ReportInitializer {
 		// Fix width of first column of details table
 		spark.config().setCss(
 				"div[class='card-body'] table[class='table table-sm'] tr[class='event-row'] table[class='markup-table table '] tr:first-child > td:first-child { width: 100px; }");
+	}
+
+	private RestAssuredPDFReporter initializePdfReport(ExtentReports extent) {
+		RestAssuredPDFReporter pdf = new RestAssuredPDFReporter(
+				Paths.get(reportProperties.getReportDirectory(), "PdfReport.pdf").toString());
+
+		extent.attachReporter(pdf);
+		/*
+		 * try { loadConfigFile(pdf); } catch (Exception e) { logger.
+		 * info("Unable to locate spark configuration. Creating report with default settings."
+		 * ); }
+		 */
+		return pdf;
 	}
 }

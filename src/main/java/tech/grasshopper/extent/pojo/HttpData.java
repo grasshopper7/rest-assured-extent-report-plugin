@@ -83,8 +83,9 @@ public abstract class HttpData {
 
 	private String createFileLink(String link, String linkText) {
 		StringBuffer sbr = new StringBuffer();
-		return sbr.append("<a href='#' onClick=\"window.open('").append(link)
-				.append("','','width=700,height=500'); return false;\">").append(linkText).append("</a> &nbsp;&nbsp;")
-				.toString();
+		return sbr.append("<span data=\"").append(link).append("\" type=\"").append(linkText)
+				.append("\"><a href='#' onClick=\"window.open('").append(link)
+				.append("','','width=700,height=500'); return false;\">").append(linkText)
+				.append("</a></span> &nbsp;&nbsp;&nbsp;").toString();
 	}
 }
