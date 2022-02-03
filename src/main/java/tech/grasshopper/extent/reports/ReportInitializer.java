@@ -16,6 +16,7 @@ import javax.inject.Singleton;
 import com.aventstack.extentreports.AnalysisStrategy;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.ReporterConfigurable;
 import com.aventstack.extentreports.reporter.configuration.ViewName;
 
 import tech.grasshopper.logging.ReportLogger;
@@ -76,25 +77,23 @@ public class ReportInitializer {
 
 		extent.attachReporter(spark);
 		try {
-			loadConfigFile(spark);
+			loadConfigFile(spark, reportProperties.getSparkConfigFilePath());
 		} catch (Exception e) {
 			logger.info("Unable to locate spark configuration. Creating report with default settings.");
 		}
 		return spark;
 	}
 
-	private void loadConfigFile(ExtentSparkReporter spark) throws IOException {
-		String configFilePath = reportProperties.getConfigFilePath();
-
+	private void loadConfigFile(ReporterConfigurable report, String configFilePath) throws IOException {
 		if (configFilePath == null || configFilePath.indexOf('.') == -1 || !Files.exists(Paths.get(configFilePath)))
 			return;
 
 		String configExt = configFilePath.substring(configFilePath.lastIndexOf('.') + 1);
 
 		if (configExt.equalsIgnoreCase("xml"))
-			spark.loadXMLConfig(configFilePath);
+			report.loadXMLConfig(configFilePath);
 		else if (configExt.equalsIgnoreCase("json"))
-			spark.loadJSONConfig(configFilePath);
+			report.loadJSONConfig(configFilePath);
 	}
 
 	private void customizeViewOrder(ExtentSparkReporter spark) {
@@ -112,7 +111,7 @@ public class ReportInitializer {
 
 	private void hideLogEvents(ExtentSparkReporter spark) {
 		// Hide log events chart
-		if (reportProperties.isHidelogEvents())
+		if (reportProperties.isSparkHidelogEvents())
 			spark.config().setJs("document.getElementsByClassName('col-md-4')[2].style.setProperty('display','none');");
 	}
 
@@ -127,11 +126,11 @@ public class ReportInitializer {
 				Paths.get(reportProperties.getReportDirectory(), "PdfReport.pdf").toString());
 
 		extent.attachReporter(pdf);
-		/*
-		 * try { loadConfigFile(pdf); } catch (Exception e) { logger.
-		 * info("Unable to locate spark configuration. Creating report with default settings."
-		 * ); }
-		 */
+		try {
+			loadConfigFile(pdf, reportProperties.getPdfConfigFilePath());
+		} catch (Exception e) {
+			logger.info("Unable to locate pdf configuration. Creating report with default settings.");
+		}
 		return pdf;
 	}
 }

@@ -33,8 +33,11 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.reportDirectoryTimeStamp", defaultValue = ReportProperties.REPORT_DIRECTORY_TIMESTAMP)
 	private String reportDirectoryTimeStamp;
 
-	@Parameter(property = "extentreport.configFilePath", defaultValue = ReportProperties.REPORT_CONFIG_FILE)
-	private String configFilePath;
+	@Parameter(property = "extentreport.sparkConfigFilePath", defaultValue = ReportProperties.SPARK_REPORT_CONFIG_FILE)
+	private String sparkConfigFilePath;
+
+	@Parameter(property = "extentreport.pdfConfigFilePath", defaultValue = ReportProperties.PDF_REPORT_CONFIG_FILE)
+	private String pdfConfigFilePath;
 
 	@Parameter(property = "extentreport.systemInfoFilePath", defaultValue = ReportProperties.REPORT_SYSTEM_INFO_FILE)
 	private String systemInfoFilePath;
@@ -42,8 +45,8 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.sparkViewOrder")
 	private String sparkViewOrder;
 
-	@Parameter(property = "extentreport.hidelogEvents", defaultValue = ReportProperties.REPORT_HIDE_LOG_EVENTS)
-	private boolean hidelogEvents;
+	@Parameter(property = "extentreport.sparkHideLogEvents", defaultValue = ReportProperties.SPARK_REPORT_HIDE_LOG_EVENTS)
+	private boolean sparkHideLogEvents;
 
 	private JsonResultsCollector jsonResultsCollector;
 	private ResultsProcessor resultsProcessor;
@@ -88,10 +91,11 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	private void setReportProperties() {
 		reportProperties.setAllureResultsDirectory(allureResultsDirectory);
 		reportProperties.setReportDirectory(reportDirectory, reportDirectoryTimeStamp);
-		reportProperties.setConfigFilePath(configFilePath);
+		reportProperties.setSparkConfigFilePath(sparkConfigFilePath);
 		reportProperties.setSystemInfoFilePath(systemInfoFilePath);
 		reportProperties.setSparkViewOrder(sparkViewOrder);
-		reportProperties.setHidelogEvents(hidelogEvents);
+		reportProperties.setSparkHidelogEvents(sparkHideLogEvents);
+		reportProperties.setPdfConfigFilePath(pdfConfigFilePath);
 	}
 
 	private void createAttachmentFolder() {

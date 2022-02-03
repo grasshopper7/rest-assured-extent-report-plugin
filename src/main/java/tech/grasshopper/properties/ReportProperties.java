@@ -20,10 +20,12 @@ public class ReportProperties {
 	@Setter(value = AccessLevel.NONE)
 	private String reportDirectory;
 
-	private String configFilePath;
+	private String sparkConfigFilePath;
 	private String systemInfoFilePath;
 	private String sparkViewOrder;
-	private boolean hidelogEvents;
+	private boolean sparkHidelogEvents;
+
+	private String pdfConfigFilePath;
 
 	public static final String EXTENT_REPORT_DATA_DIRECTORY = "data";
 	public static final String BODY = "Body";
@@ -33,9 +35,12 @@ public class ReportProperties {
 	public static final String ALLURE_RESULTS_DIRECTORY = "target/allure-results";
 	public static final String REPORT_DIRECTORY = "report";
 	public static final String REPORT_DIRECTORY_TIMESTAMP = "dd MM yyyy HH mm ss";
-	public static final String REPORT_CONFIG_FILE = "src/test/resources/spark-config.xml";
 	public static final String REPORT_SYSTEM_INFO_FILE = "src/test/resources/systeminfo.properties";
-	public static final String REPORT_HIDE_LOG_EVENTS = "true";
+
+	public static final String SPARK_REPORT_CONFIG_FILE = "src/test/resources/spark-config.xml";
+	public static final String SPARK_REPORT_HIDE_LOG_EVENTS = "true";
+
+	public static final String PDF_REPORT_CONFIG_FILE = "src/test/resources/pdf-config.xml";
 
 	private ReportLogger logger;
 
