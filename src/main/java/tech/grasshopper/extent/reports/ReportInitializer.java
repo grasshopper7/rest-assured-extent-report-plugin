@@ -43,12 +43,15 @@ public class ReportInitializer {
 
 		addSystemInfoProperties(extent);
 
-		ExtentSparkReporter spark = initializeSparkReport(extent);
-		customizeViewOrder(spark);
-		hideLogEvents(spark);
-		customizeDataLogTable(spark);
+		if (reportProperties.isSparkGenerate()) {
+			ExtentSparkReporter spark = initializeSparkReport(extent);
+			customizeViewOrder(spark);
+			hideLogEvents(spark);
+			customizeDataLogTable(spark);
+		}
 
-		initializePdfReport(extent);
+		if (reportProperties.isPdfGenerate())
+			initializePdfReport(extent);
 
 		return extent;
 	}

@@ -33,8 +33,14 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	@Parameter(property = "extentreport.reportDirectoryTimeStamp", defaultValue = ReportProperties.REPORT_DIRECTORY_TIMESTAMP)
 	private String reportDirectoryTimeStamp;
 
+	@Parameter(property = "extentreport.sparkGenerate", defaultValue = ReportProperties.SPARK_REPORT_GENERATE)
+	private boolean sparkGenerate;
+
 	@Parameter(property = "extentreport.sparkConfigFilePath", defaultValue = ReportProperties.SPARK_REPORT_CONFIG_FILE)
 	private String sparkConfigFilePath;
+
+	@Parameter(property = "extentreport.pdfGenerate", defaultValue = ReportProperties.PDF_REPORT_GENERATE)
+	private boolean pdfGenerate;
 
 	@Parameter(property = "extentreport.pdfConfigFilePath", defaultValue = ReportProperties.PDF_REPORT_CONFIG_FILE)
 	private String pdfConfigFilePath;
@@ -72,6 +78,10 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 			logger.info("STARTING EXTENT REPORT GENERATION");
 
 			setReportProperties();
+			if (!reportProperties.isSparkGenerate() && !reportProperties.isPdfGenerate()) {
+				logger.info("STOPPING EXTENT REPORT GENERATION - No report type selected.");
+				return;
+			}
 			createAttachmentFolder();
 
 			List<Result> results = jsonResultsCollector.retrieveResults(reportProperties.getAllureResultsDirectory());
@@ -91,10 +101,14 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 	private void setReportProperties() {
 		reportProperties.setAllureResultsDirectory(allureResultsDirectory);
 		reportProperties.setReportDirectory(reportDirectory, reportDirectoryTimeStamp);
-		reportProperties.setSparkConfigFilePath(sparkConfigFilePath);
 		reportProperties.setSystemInfoFilePath(systemInfoFilePath);
+
+		reportProperties.setSparkGenerate(sparkGenerate);
+		reportProperties.setSparkConfigFilePath(sparkConfigFilePath);
 		reportProperties.setSparkViewOrder(sparkViewOrder);
 		reportProperties.setSparkHidelogEvents(sparkHideLogEvents);
+
+		reportProperties.setPdfGenerate(pdfGenerate);
 		reportProperties.setPdfConfigFilePath(pdfConfigFilePath);
 	}
 

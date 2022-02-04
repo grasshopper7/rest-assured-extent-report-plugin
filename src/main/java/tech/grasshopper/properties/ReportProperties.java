@@ -20,11 +20,14 @@ public class ReportProperties {
 	@Setter(value = AccessLevel.NONE)
 	private String reportDirectory;
 
-	private String sparkConfigFilePath;
 	private String systemInfoFilePath;
+
+	private boolean sparkGenerate;
+	private String sparkConfigFilePath;
 	private String sparkViewOrder;
 	private boolean sparkHidelogEvents;
 
+	private boolean pdfGenerate;
 	private String pdfConfigFilePath;
 
 	public static final String EXTENT_REPORT_DATA_DIRECTORY = "data";
@@ -37,9 +40,11 @@ public class ReportProperties {
 	public static final String REPORT_DIRECTORY_TIMESTAMP = "dd MM yyyy HH mm ss";
 	public static final String REPORT_SYSTEM_INFO_FILE = "src/test/resources/systeminfo.properties";
 
+	public static final String SPARK_REPORT_GENERATE = "true";
 	public static final String SPARK_REPORT_CONFIG_FILE = "src/test/resources/spark-config.xml";
 	public static final String SPARK_REPORT_HIDE_LOG_EVENTS = "true";
 
+	public static final String PDF_REPORT_GENERATE = "true";
 	public static final String PDF_REPORT_CONFIG_FILE = "src/test/resources/pdf-config.xml";
 
 	private ReportLogger logger;
