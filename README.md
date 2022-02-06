@@ -27,7 +27,7 @@ For more details refer to this [article](http://ghchirp.tech/3791/). Sample usag
 ```
 Default configuration details and tips to be modify them can be found in the article. For more details refer to the relevant POM - [JUnit4](https://github.com/grasshopper7/rest-assured-report-junit4/blob/master/pom.xml), [JUnit5](https://github.com/grasshopper7/rest-assured-report-junit5/blob/master/pom.xml), [TestNG](https://github.com/grasshopper7/rest-assured-report-testng/blob/master/pom.xml).
 
-**Pdf Report Images** - 
+***Pdf Report Images*** - 
 
 *Dashboard*
 
@@ -53,7 +53,7 @@ Default configuration details and tips to be modify them can be found in the art
 
 ![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-device.png)
 
-**Spark Report Images** - 
+***Spark Report Images*** - 
 
 *Dashboard*
 
