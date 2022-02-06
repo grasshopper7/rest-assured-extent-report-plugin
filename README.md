@@ -1,6 +1,6 @@
 ## Spark & Pdf Extent Report generation for REST Assured API Testing
 
-This [artifact](http://ghchirp.tech/3791/) deals with creation of Spark and Pdf Extent Report for REST Assured validation by using a Maven Plugin. The artifact uses the REST Assured Filter from the Allure Framework for generating the report data. This works with JUnit 4, JUnit 5 and TestNG testing frameworks. This avoids the mixing of Extent Report calls within the test code. All that is required in the code is an addition of a REST Assured filter. The remaining changes are all POM configuration changes.
+This [artifact](http://ghchirp.tech/3791/) deals with the creation of Spark and Pdf Extent Report for REST Assured validation by using a Maven Plugin. The artifact uses the REST Assured Filter from the Allure Framework for generating the report data. This works with JUnit 4, JUnit 5 and TestNG testing frameworks. This avoids the mixing of Extent Report calls within the test code. All that is required in the code is an addition of a REST Assured filter. The remaining changes are all POM configuration changes.
 
 For more details refer to this [article](http://ghchirp.tech/3791/). Sample usages for [JUnit4](https://github.com/grasshopper7/rest-assured-report-junit4), [JUnit5](https://github.com/grasshopper7/rest-assured-report-junit5), [TestNG](https://github.com/grasshopper7/rest-assured-report-testng).
 
