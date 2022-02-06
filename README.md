@@ -37,6 +37,10 @@ Default configuration details and tips be modify them can be found in the [artic
 
 ![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-tests.png)
 
+*Attributes*
+
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-attributes.png)
+
 *Exception*
 
 ![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-exception.png)
