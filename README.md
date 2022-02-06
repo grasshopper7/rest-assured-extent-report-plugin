@@ -37,6 +37,20 @@ Default configuration details and tips to be modify them can be found in the art
 
 ![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-tests.png)
 
+*Exception*
+
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-exception.png)
+
+*Category*
+
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-category.png)
+
+*Author*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-author.png)
+
+*Device*
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-device.png)
+
 **Spark Report Images** - 
 
 *Dashboard*
