@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tech.grasshopper.pojo.HttpLogData;
 
 @Data
 @NoArgsConstructor

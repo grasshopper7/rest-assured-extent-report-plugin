@@ -8,8 +8,8 @@ import javax.inject.Singleton;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
-import tech.grasshopper.extent.pojo.HttpLogData;
 import tech.grasshopper.extent.pojo.ResultExtent;
+import tech.grasshopper.pojo.HttpLogData;
 
 @Singleton
 public class DataLogCreator {

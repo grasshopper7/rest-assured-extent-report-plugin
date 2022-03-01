@@ -14,7 +14,6 @@ import javax.inject.Singleton;
 
 import tech.grasshopper.extent.pojo.ResultExtent;
 import tech.grasshopper.pojo.Result;
-import tech.grasshopper.processor.attachment.AttachmentProcessor;
 import tech.grasshopper.properties.ReportProperties;
 
 @Singleton
@@ -23,21 +22,24 @@ public class ResultsProcessor {
 	private StatusProcessor statusProcessor;
 	private DateProcessor dateProcessor;
 	private LabelProcessor labelProcessor;
-	private AttachmentProcessor attachmentProcessor;
 	private ReportProperties reportProperties;
+	private AttachmentProcessor attachmentProcessor;
 
 	@Inject
 	public ResultsProcessor(StatusProcessor statusProcessor, DateProcessor dateProcessor, LabelProcessor labelProcessor,
-			AttachmentProcessor attachmentProcessor, ReportProperties reportProperties) {
+			ReportProperties reportProperties) {
 		this.statusProcessor = statusProcessor;
 		this.dateProcessor = dateProcessor;
 		this.labelProcessor = labelProcessor;
-		this.attachmentProcessor = attachmentProcessor;
 		this.reportProperties = reportProperties;
 	}
 
 	public Map<String, List<ResultExtent>> process(List<Result> results) {
 		deleteExistingAttachmentFiles();
+
+		attachmentProcessor = AttachmentProcessor.builder()
+				.allureResultsDirectory(reportProperties.getAllureResultsDirectory())
+				.reportDirectory(reportProperties.getReportDirectory()).build();
 
 		return results.stream()
 				.collect(Collectors.mapping(r -> transformResult(r), Collectors.groupingBy(e -> e.getClassName())));
