@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.6.0 (2022-3-5)
+
+* Updated rest assured pdf version
+
 ## 1.5.0 (2022-3-1)
 
 * Refactored Allure processing to separate jar
