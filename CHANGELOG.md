@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.0.0 (2022-4-7)
+
+* Replaced Allure filter with custom Extent Rest Assured filter
+* Added request parameters data - Form, Query, Path, Request, Multi Part Data
+* Consolidated headers and cookies data display
+
 ## 1.6.0 (2022-3-5)
 
 * Updated rest assured pdf version
