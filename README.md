@@ -31,54 +31,54 @@ Default configuration details and tips be modify them can be found in the [artic
 
 *Dashboard*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-db.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/ra-db.png)
 
 *Tests*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-tests.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/ra-tests.png)
 
 *Attributes*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-attributes.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/ra-attributes.png)
 
 *Exception*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-exception.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/ra-exception.png)
 
 *Category*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-category.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/ra-category.png)
 
 *Author*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-author.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/ra-author.png)
 
 *Device*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/ra-device.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/ra-device.png)
 
 ***Spark Report Images*** - 
 
 *Dashboard*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/dashboard.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/dashboard.png)
 
 *Tests*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/tests.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/tests.png)
 
 *Exception*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/exception.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/exception.png)
 
 *Category*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/category.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/category.png)
 
 *Author*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/author.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/author.png)
 
 *Device*
 
-![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/device.png)
+![sample](https://raw.githubusercontent.com/grasshopper7/rest-assured-extent-report-plugin/master/images/device.png)
