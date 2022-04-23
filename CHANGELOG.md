@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.1.0 (2022-4-23)
+
+* Updated rest assured pdf version
+
 ## 2.0.0 (2022-4-7)
 
 * Replaced Allure filter with custom Extent Rest Assured filter
