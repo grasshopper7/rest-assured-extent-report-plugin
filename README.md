@@ -13,7 +13,7 @@ For more details refer to this [article](http://ghchirp.tech/3791/). Sample usag
 <plugin>
   <groupId>tech.grasshopper</groupId>
   <artifactId>rest-assured-extent-report-plugin</artifactId>
-  <version>1.6.0</version>
+  <version>2.1.0</version>
   <executions>
     <execution>
       <id>report</id>
