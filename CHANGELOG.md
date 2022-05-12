@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.1.2 (2022-5-11)
+
+* Updated allure annotation version
+
 ## 2.1.1 (2022-4-26)
 
 * Updated rest assured pdf version
