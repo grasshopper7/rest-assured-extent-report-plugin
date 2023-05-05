@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -32,6 +33,12 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 
 	@Parameter(property = "extentreport.reportDirectoryTimeStamp", defaultValue = ReportProperties.REPORT_DIRECTORY_TIMESTAMP)
 	private String reportDirectoryTimeStamp;
+	
+	@Parameter(property = "extentreport.requestHeadersBlacklist")
+	private Set<String> requestHeadersBlacklist;
+
+	@Parameter(property = "extentreport.responseHeadersBlacklist")
+	private Set<String> responseHeadersBlacklist;
 
 	@Parameter(property = "extentreport.sparkGenerate", defaultValue = ReportProperties.SPARK_REPORT_GENERATE)
 	private boolean sparkGenerate;
@@ -102,6 +109,9 @@ public class RestAssuredExtentReportPlugin extends AbstractMojo {
 		reportProperties.setAllureResultsDirectory(allureResultsDirectory);
 		reportProperties.setReportDirectory(reportDirectory, reportDirectoryTimeStamp);
 		reportProperties.setSystemInfoFilePath(systemInfoFilePath);
+		
+		reportProperties.setRequestHeadersBlacklist(requestHeadersBlacklist);
+		reportProperties.setResponseHeadersBlacklist(responseHeadersBlacklist);
 
 		reportProperties.setSparkGenerate(sparkGenerate);
 		reportProperties.setSparkConfigFilePath(sparkConfigFilePath);

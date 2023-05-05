@@ -2,6 +2,7 @@ package tech.grasshopper.properties;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,6 +22,9 @@ public class ReportProperties {
 	private String reportDirectory;
 
 	private String systemInfoFilePath;
+
+	private Set<String> requestHeadersBlacklist;
+	private Set<String> responseHeadersBlacklist;
 
 	private boolean sparkGenerate;
 	private String sparkConfigFilePath;

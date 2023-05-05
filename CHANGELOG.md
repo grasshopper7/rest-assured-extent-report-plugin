@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.2.0 (2023-5-5)
+
+* Blacklist request and response headers
+
 ## 2.1.2 (2022-5-11)
 
 * Updated allure annotation version

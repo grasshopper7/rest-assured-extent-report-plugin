@@ -39,7 +39,9 @@ public class ResultsProcessor {
 
 		attachmentProcessor = AttachmentProcessor.builder()
 				.allureResultsDirectory(reportProperties.getAllureResultsDirectory())
-				.reportDirectory(reportProperties.getReportDirectory()).build();
+				.reportDirectory(reportProperties.getReportDirectory())
+				.requestHeadersBlacklist(reportProperties.getRequestHeadersBlacklist())
+				.responseHeadersBlacklist(reportProperties.getResponseHeadersBlacklist()).build();
 
 		return results.stream()
 				.collect(Collectors.mapping(r -> transformResult(r), Collectors.groupingBy(e -> e.getClassName())));
